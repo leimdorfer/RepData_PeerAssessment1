@@ -8,10 +8,41 @@ output:
 
 ## Loading and preprocessing the data
 
+We load in the activity.csv file and can see from the stucture of the rawdata that there are 3 columns of data: $steps, $date, $interval.
+
+```{r}
+      activity <- read.csv("./activity.csv") 
+
+      str(activity)
+```
+
+We use the dplyr library to group_by the dates and sum the total number of steps
+
+```{r}
+      library(dplyr)
+      
+      by_date <- group_by(activity, date)
+      
+      per_day <- summarise(by_date,
+            total_steps = sum(steps, na.rm = TRUE))
+```
 
 
 ## What is mean total number of steps taken per day?
 
+
+We can draw a histogram to show the distribution of the totals for each date and calculate the mean and median total_steps.
+
+```{r}
+      hist(per_day$total_steps)
+      
+      steps_mean <- mean(per_day$total_steps)
+      steps_median <- median(per_day$total_steps)
+      
+      print(steps_mean)
+      print(steps_median)
+      
+```
 
 
 ## What is the average daily activity pattern?
